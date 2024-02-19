@@ -1,35 +1,33 @@
-const express = require("express")
-const app = express()
-const mongoose = require('mongoose')
-const UserModel = require('./models/users')
-
+const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
-app.use(express.json());
+//IMPORT ROUTES
+const authRoutes = require('./routes/auth');
+const { db } = require('./models/User');
+
+//APP
+const app = express();
+
+//DATABASE
+mongoose
+  .connect(process.env.DATABASE,{
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+   })
+  .then(() => console.log('DB Connected'));
+
+//MIDDLEWARES
+app.use(bodyParser.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://lachlan_rolley:alsk99PL@cluster0.bi7oc5p.mongodb.net/joplanaDatabase?retryWrites=true&w=majority")
+//ROUTES
+app.use('/api', authRoutes);
 
-app.get("/getUsers", async (req, res) => {
-  try {
-    const users = await UserModel.find({});
-    res.json(users);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Internal server error" });
-  }
+//START SERVER
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
+  console.log(`Server is running on ${port}`)
 });
-
-app.post("/createUser", async (req, res) => {
-  const user = req.body // grab data from frontend
-  const newUser = new UserModel(user); // put all the data in the model
-  await newUser.save(); // save it to the database
-
-  res.json(user)
-})
-
-
-app.listen(3001, ()=> {
-  console.log("SERVER RUNNING")
-});
-
