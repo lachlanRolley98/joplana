@@ -1,3 +1,5 @@
+// SERVER AND AUTHENTICATION:
+// https://medium.com/swlh/user-authentication-using-mern-stack-part-1-backend-cd4d193f15b1
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
