@@ -2,6 +2,8 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { AuthProvider } from './components/AuthContext'; // Import AuthProvider
+
 import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
 
@@ -12,6 +14,7 @@ function App() {
 
   return (
     <div className="App">
+      <AuthProvider>
         <BrowserRouter>
           <Routes>
 
@@ -20,6 +23,7 @@ function App() {
 
           </Routes>
         </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }

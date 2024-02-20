@@ -1,7 +1,10 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import { handleCreateUser, handleLogInUser } from './HTTP/Account'
+import { AuthContext } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const { token, setToken } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstname] = useState('');
@@ -10,7 +13,7 @@ const LoginPage = () => {
   const [userName, setUserName] = useState('');
   const [passwordCreate, setPasswordCreate] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [deets, setDeets] = useState('');
+  const navigate = useNavigate()
 
   return (
     <div>
@@ -22,7 +25,7 @@ const LoginPage = () => {
           <input type="text" placeholder='Password' onChange={(event) => {setPassword(event.target.value)}}></input>
         </div>
         <div>
-          <button onClick={ () => handleLogInUser( email, password, setDeets)} >Login</button>
+          <button onClick={ () => handleLogInUser( email, password, setToken, navigate)} >Login</button>
         </div>
         <h1>Create Account</h1>
         <div>
@@ -47,9 +50,8 @@ const LoginPage = () => {
           <button onClick={ () => handleCreateUser(firstName, lastName, emailCreate, userName, passwordCreate, passwordConfirm)} >Create Account</button>
         </div>
         <div>
-          <button onClick={ () => {console.log(deets)} } >See Deets</button>
+          <button onClick={ () => {console.log(token)} } >token</button>
         </div>
-
 
     </div>
   );

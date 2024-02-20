@@ -1,4 +1,5 @@
 import Axios from "axios";
+const PORT = 8000;
 
 export const handleCreateUser = (firstName, lastName, email, userName, password, password_confirmation) => {
   const doCreateUser = async () => {
@@ -11,7 +12,7 @@ export const handleCreateUser = (firstName, lastName, email, userName, password,
         password,
         password_confirmation
       }
-      Axios.post(`http://localhost:8000/api/signup`, body)
+      Axios.post(`http://localhost:${PORT}/api/signup`, body)
       .then((response) => {
         console.log(response);
       })
@@ -25,19 +26,19 @@ export const handleCreateUser = (firstName, lastName, email, userName, password,
   doCreateUser();
 }
 
-export const handleLogInUser = (email, password, setDeets) => {
+export const handleLogInUser = (email, password, setToken, navigate) => {
   const doLogInUser = async () => {
     try {
       const body = {
         email,
         password,
       }
-      Axios.post(`http://localhost:8000/api/signin`, body)
+      Axios.post(`http://localhost:${PORT}/api/signin`, body)
       .then((response) => {
         console.log(response);
-        alert("logged in");
-        setDeets(response.data);
+        setToken(response.data.token)
         localStorage.setItem('token', response.data.token)
+        navigate("/landing")
       })
       .catch(function (error) {
         console.log(error);

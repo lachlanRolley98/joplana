@@ -8,7 +8,10 @@ require('dotenv').config();
 
 //IMPORT ROUTES
 const authRoutes = require('./routes/auth');
-const { db } = require('./models/User');
+const monthRoutes = require('./routes/month');
+// const { db } = require('./models/User');
+const userModel = require('./models/User');
+const monthModel = require('./models/Month');
 
 //APP
 const app = express();
@@ -27,6 +30,7 @@ app.use(cors());
 
 //ROUTES
 app.use('/api', authRoutes);
+app.use('/api', monthRoutes);
 
 //START SERVER
 const port = process.env.PORT || 8000;
