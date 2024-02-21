@@ -1,3 +1,6 @@
+.height-but{
+  height: 20px;
+}
 
 .page-flex{
   display: flex;
@@ -24,7 +27,7 @@
 
 .cards-container{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: rgb(243, 7, 204);
   width: 90%;
   height: 90%;

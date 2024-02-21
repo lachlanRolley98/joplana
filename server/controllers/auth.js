@@ -121,3 +121,44 @@ exports.signin = (req, res) => {
     res.status(500).json({ erros: err });
   });
 }
+
+exports.updateGoals = (req, res) => {
+  console.log('we made it')
+  try {
+    /* AUTHORISATION CHECK --  AUTHORISATION CHECK */
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+    // Check if the authorization header is in the correct format
+    const tokenParts = authHeader.split(' ');
+    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+      return res.status(401).json({ message: "Invalid authorization header format" });
+    }
+    const token = tokenParts[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" });
+      }
+      /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
+      const userId = decodedToken.userId;
+      let {updatedGoals} = req.body;
+      console.log(updatedGoals);
+
+      User.findOneAndUpdate(
+        { _id: userId },
+        { $set: {curGoals: updatedGoals} },
+      )
+        .then(updatedUser => {
+          console.log('Goals updated:', updatedUser);
+        })
+        .catch(error => {
+          console.error('Error updating goals:', error);
+        });
+
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
