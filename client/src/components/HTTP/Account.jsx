@@ -1,12 +1,10 @@
 import Axios from "axios";
 const PORT = 8000;
 
-export const handleCreateUser = (firstName, lastName, email, userName, password, password_confirmation) => {
+export const handleCreateUser = (email, userName, password, password_confirmation) => {
   const doCreateUser = async () => {
     try {
       const body = {
-        firstName,
-        lastName,
         email,
         userName,
         password,
@@ -35,9 +33,12 @@ export const handleLogInUser = (email, password, setToken, navigate) => {
       }
       Axios.post(`http://localhost:${PORT}/api/signin`, body)
       .then((response) => {
+        console.log('hello world');
         console.log(response);
-        setToken(response.data.token)
-        localStorage.setItem('token', response.data.token)
+        setToken(response.data.token);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userName', response.data.userName);
+        localStorage.setItem('curGoals', response.data.curGoals);
         navigate("/landing")
       })
       .catch(function (error) {

@@ -23,7 +23,7 @@ exports.submit = (req, res) => {
       }
       /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
       const userId = decodedToken.userId;
-      let {recap, tplan, dream, date} = req.body;
+      let {recap, tplan, dream, date, goals} = req.body;
       //console.log(userId, recap, tplan, dream, goals, date)
       // need to strip month into day DD and month YYYY-MM
       const [day, month] = dateSplitter(date);
@@ -46,7 +46,7 @@ exports.submit = (req, res) => {
               recap,
               tplan,
               dream,
-              goals: goals2
+              goals,
             }
           }
         },

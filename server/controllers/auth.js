@@ -9,14 +9,8 @@ const { createJWT } = require("../utils/auth");
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 exports.signup = (req, res) => {
-  let { firstName, lastName, email, userName, password, password_confirmation } = req.body;
+  let {email, userName, password, password_confirmation } = req.body;
   let errors = [];
-  if (!firstName) {
-    errors.push({ firstName: "required" });
-  }
-  if (!lastName) {
-    errors.push({ lastName: "required" });
-  }
   if (!userName) {
     errors.push({ userName: "required" });
   }
@@ -46,8 +40,6 @@ exports.signup = (req, res) => {
           return res.status(422).json({ errors: [{ user: "email already exists" }] });
         }else {
           const user = new User({
-            firstName,
-            lastName,
             email,
             userName,
             password
@@ -116,7 +108,8 @@ exports.signin = (req, res) => {
               return res.status(200).json({
                 success: true,
                 token: access_token,
-                message: user
+                userName: user.userName,
+                curGoals: user.curGoals
               });
             }
           });

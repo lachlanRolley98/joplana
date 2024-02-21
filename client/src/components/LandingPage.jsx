@@ -3,14 +3,14 @@ import { handleSubmitDay } from './HTTP/Landing'
 import { AuthContext } from './AuthContext';
 import '../style/PageSpecific/Landing.css';
 
-
 const LandingPage = () => {
   const { token } = useContext(AuthContext);
   const [recap, setRecap] = useState('');
   const [tplan, setTplan] = useState('');
   const [dream, setDream] = useState('');
-  //const [goals, setGoals] = useState(['gym', 'med', 'diet'])
-  const [date, setDate] = useState('21-02-2023')
+  const [goals, setGoals] = useState({testgoal1: 1, testgoal2: 2, testgoal3: 3, testgoal4: 4, testgoal5: 5})
+  const [date, setDate] = useState('21-02-2023');
+
   return (
     <div>
       <div className='page-flex'>
@@ -25,10 +25,11 @@ const LandingPage = () => {
             <input className='full-width' type="text" value={tplan} onChange={e => setTplan(e.target.value)}></input>
             <h2>Dream</h2>
             <input className='full-width' type="text" value={dream} onChange={e => setDream(e.target.value)}></input>
-            <button onClick={ () => {handleSubmitDay (token, recap, tplan, dream, date)} }>submit</button>
+            <button onClick={ () => {handleSubmitDay (token, recap, tplan, dream, date, goals)} }>submit</button>
           </div>
           <div className='cards-container'>
             <h1>Goal Cards</h1>
+            <button onClick={ () => {console.log(`curGoals is: apple`)} }>submit</button>
           </div>
         </div>
         <div className='graph-container'>

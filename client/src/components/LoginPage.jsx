@@ -7,8 +7,6 @@ const LoginPage = () => {
   const { token, setToken } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstname] = useState('');
-  const [lastName, setLastname] = useState('');
   const [emailCreate, setemailcreate] = useState('');
   const [userName, setUserName] = useState('');
   const [passwordCreate, setPasswordCreate] = useState('');
@@ -29,12 +27,6 @@ const LoginPage = () => {
         </div>
         <h1>Create Account</h1>
         <div>
-          <input type="text" placeholder='firstName' onChange={(event) => {setFirstname(event.target.value)}}></input>
-        </div>
-        <div>
-          <input type="text" placeholder='lastName' onChange={(event) => {setLastname(event.target.value)}}></input>
-        </div>
-        <div>
           <input type="text" placeholder='emailCreate' onChange={(event) => {setemailcreate(event.target.value)}}></input>
         </div>
         <div>
@@ -47,7 +39,7 @@ const LoginPage = () => {
           <input type="text" placeholder='passwordConfirm' onChange={(event) => {setPasswordConfirm(event.target.value)}}></input>
         </div>
         <div>
-          <button onClick={ () => handleCreateUser(firstName, lastName, emailCreate, userName, passwordCreate, passwordConfirm)} >Create Account</button>
+          <button onClick={ () => handleCreateUser(emailCreate, userName, passwordCreate, passwordConfirm)} >Create Account</button>
         </div>
         <div>
           <button onClick={ () => {console.log(token)} } >token</button>

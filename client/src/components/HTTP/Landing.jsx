@@ -1,7 +1,7 @@
 import Axios from "axios";
 const PORT = 8000;
 
-export const handleSubmitDay = (token, recap, tplan, dream, date) => {
+export const handleSubmitDay = (token, recap, tplan, dream, date, goals) => {
   console.log('in handleSubmitDay');
   const doSubmitDay = async () => {
     try {
@@ -9,7 +9,8 @@ export const handleSubmitDay = (token, recap, tplan, dream, date) => {
         recap,
         tplan,
         dream,
-        date
+        date,
+        goals
       }
       const headers = {
         "Authorization": `Bearer ${token}`,
