@@ -12,6 +12,7 @@ const LandingPage = () => {
   const [date, setDate] = useState('21-02-2023');
   const [addGoal, setAddGoal] = useState('');
   const [removeGoal, setRemoveGoal] = useState('');
+  const [goalValues, setGoalValues] = useState({}); // State to store the values of each text box
 
   const[curGoals, setCurGoals] = useState([]);
 
@@ -21,7 +22,7 @@ const LandingPage = () => {
       setCurGoals(storedCurGoals.split(',')); // split into array because easer to play with
     }
   }, []);
-
+  // NEEEEED TO ENSURE NO DUPLICATES !!!!! OR SHIT WILL CRASH
   const addGoals = (newGoal) => {
     const goalBuf = [...curGoals, newGoal];
     setCurGoals(goalBuf)
@@ -36,7 +37,21 @@ const LandingPage = () => {
       goalBuf.splice(indexToRemove, 1); // 2nd parameter means remove one item only
     }
     setCurGoals(goalBuf)
+
+    // incase they give a goal a rating then delete it after, need to delete the rating
+    const updatedGoalValues = { ...goalValues };
+    delete updatedGoalValues[removeGoal];
+    setGoalValues(updatedGoalValues);
   }
+
+  // Function to update the values of the text boxes
+  const handleGoalChange = (e, index) => {
+    const { value } = e.target;
+    setGoalValues(prevState => ({
+      ...prevState,
+      [index]: value
+    }));
+  };
 
   return (
     <div>
@@ -52,7 +67,7 @@ const LandingPage = () => {
             <input className='full-width' type="text" value={tplan} onChange={e => setTplan(e.target.value)}></input>
             <h2>Dream</h2>
             <input className='full-width' type="text" value={dream} onChange={e => setDream(e.target.value)}></input>
-            <button onClick={ () => {handleSubmitDay (token, recap, tplan, dream, date, goals)} }>submit</button>
+            <button onClick={ () => {handleSubmitDay (token, recap, tplan, dream, date, goalValues)} }>submit</button>
           </div>
           <div className='cards-container'>
             <h1>Goal Cards</h1>
@@ -64,10 +79,19 @@ const LandingPage = () => {
             <h2>current goals</h2>
             <input type='text' placeholder={curGoals}></input>
             <button onClick={ () => {handleUpdateGoals (token, curGoals)} }>update Goals</button>
+            {
+              curGoals.map((goal, index) => (
+                <input
+                  key={goal}
+                  type='text'
+                  placeholder='hi'
+                  value={goalValues[goal] || ''} // Set value from goalValues state
+                  onChange={e => handleGoalChange(e, goal)} // Pass index to identify which text box is being edited
+                />
+              ))
+            }
+            <button onClick={ () => { console.log({goalValues}) } }>Goal Values</button>
           </div>
-        </div>
-        <div className='graph-container'>
-          <h1>Graphs</h1>
         </div>
       </div>
     </div>

@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 //IMPORT ROUTES
-const authRoutes = require('./routes/auth');
-const monthRoutes = require('./routes/month');
+const authRoutes = require('./routes/authRou');
+const monthRoutes = require('./routes/monthRou');
 // const { db } = require('./models/User');
 const userModel = require('./models/User');
 const monthModel = require('./models/Month');
