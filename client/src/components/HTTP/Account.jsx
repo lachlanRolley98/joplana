@@ -1,28 +1,23 @@
 import Axios from "axios";
 const PORT = 8000;
 
-export const handleCreateUser = (email, userName, password, password_confirmation) => {
-  const doCreateUser = async () => {
-    try {
-      const body = {
-        email,
-        userName,
-        password,
-        password_confirmation
-      }
-      Axios.post(`http://localhost:${PORT}/api/signup`, body)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+export const handleCreateUser = async (email, userName, password, password_confirmation) => {
+  try {
+    const body = {
+      email,
+      userName,
+      password,
+      password_confirmation
+    };
+    const response = await Axios.post(`http://localhost:${PORT}/api/signup`, body);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
   }
-  doCreateUser();
-}
+};
+
 
 export const handleLogInUser = (email, password, setToken, navigate) => {
   const doLogInUser = async () => {
@@ -43,7 +38,7 @@ export const handleLogInUser = (email, password, setToken, navigate) => {
       })
       .catch(function (error) {
         console.log(error);
-        alert("bad");
+        alert("Inccorect details");
       });
     } catch (error) {
       console.log(error);

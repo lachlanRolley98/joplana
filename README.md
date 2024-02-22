@@ -1,3 +1,3 @@
 # joplana
-MERN development of jornal and planner
+MERN development of journal and planner
 test
