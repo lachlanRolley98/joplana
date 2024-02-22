@@ -58,3 +58,31 @@ export const handleUpdateGoals = (token, updatedGoals) => {
   }
   doUpdateGoals();
 }
+
+
+export const handleGetMonth = async (token, date) => {
+  console.log('in handleGetMonth');
+  try {
+    const body = {
+      date
+    };
+    const headers = {
+      "Authorization": `Bearer ${token}`,
+      'content-type': 'application/json'
+    };
+
+    const response = await Axios.get(`http://localhost:${PORT}/api/getMonth`, {
+      headers: headers,
+      params: body // Pass the date as a query parameter
+    });
+
+    console.log(response.data);
+    return response.data; // Return the data obtained from the API call
+
+  } catch (error) {
+    console.log(error);
+    throw error; // Rethrow the error to propagate it to the caller
+  }
+};
+
+

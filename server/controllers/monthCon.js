@@ -65,3 +65,48 @@ exports.submit = (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getMonth = (req, res) => {
+
+  try {
+    /* AUTHORISATION CHECK --  AUTHORISATION CHECK */
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+    // Check if the authorization header is in the correct format
+    const tokenParts = authHeader.split(' ');
+    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+      return res.status(401).json({ message: "Invalid authorization header format" });
+    }
+    const token = tokenParts[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" });
+      }
+      /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
+      const userId = decodedToken.userId;
+      let {date} = req.query;
+      //console.log(userId, recap, tplan, dream, goals, date)
+      // need to strip month into day DD and month MM-YYYY
+      console.log(date);
+      const [day, month] = dateSplitter(date);
+
+      Month.findOne(
+        { user_id: userId, month: month },
+        { month: 1, days: 1 }, // Specify fields to return
+        { new: true, upsert: true } // To return the updated document and create if it doesn't exist
+      )
+        .then(monthFound => {
+          console.log('Month Found:', monthFound);
+          res.status(200).json(monthFound)
+        })
+        .catch(error => {
+          console.error('Error finding Month:', error);
+        });
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

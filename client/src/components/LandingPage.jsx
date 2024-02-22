@@ -1,5 +1,5 @@
 import { React, useState, useContext, useEffect } from 'react';
-import { handleSubmitDay, handleUpdateGoals } from './HTTP/Landing'
+import { handleSubmitDay, handleUpdateGoals, handleGetMonth } from './HTTP/Landing'
 import { AuthContext } from './AuthContext';
 import '../style/PageSpecific/Landing.css';
 
@@ -13,6 +13,7 @@ const LandingPage = () => {
   const [addGoal, setAddGoal] = useState('');
   const [removeGoal, setRemoveGoal] = useState('');
   const [goalValues, setGoalValues] = useState({}); // State to store the values of each text box
+  const [monthData, setMonthData] = useState(null); // State to store month data
 
   const[curGoals, setCurGoals] = useState([]);
 
@@ -27,6 +28,21 @@ const LandingPage = () => {
     const goalBuf = [...curGoals, newGoal];
     setCurGoals(goalBuf)
   }
+
+  // Function to handle getting month data
+  const handleFetchMonthData = async () => {
+    try {
+      const data = await handleGetMonth(token, date); // Call handleGetMonth
+      setMonthData(data); // Update monthData state with returned data
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log('fetching Month On Load')
+    handleFetchMonthData(); // Fetch month data on page load
+  }, []); // Empty dependency array ensures the effect runs only once on mount
 
   const removeGoals = (removeGoal) => {
     console.log('in here')
@@ -68,6 +84,7 @@ const LandingPage = () => {
             <h2>Dream</h2>
             <input className='full-width' type="text" value={dream} onChange={e => setDream(e.target.value)}></input>
             <button onClick={ () => {handleSubmitDay (token, recap, tplan, dream, date, goalValues)} }>submit</button>
+            <button onClick={ () => {console.log(monthData)} }>Print Month</button>
           </div>
           <div className='cards-container'>
             <h1>Goal Cards</h1>
