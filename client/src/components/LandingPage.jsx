@@ -2,6 +2,8 @@ import { React, useState, useContext, useEffect } from 'react';
 import { handleSubmitDay, handleUpdateGoals, handleGetMonth } from './HTTP/Landing'
 import { AuthContext } from './AuthContext';
 import '../style/PageSpecific/Landing.css';
+import { useTheme } from './ThemeContext'; // Path to your useTheme hook
+
 
 const LandingPage = () => {
   const { token } = useContext(AuthContext);
@@ -14,6 +16,7 @@ const LandingPage = () => {
   const [removeGoal, setRemoveGoal] = useState('');
   const [goalValues, setGoalValues] = useState({}); // State to store the values of each text box
   const [monthData, setMonthData] = useState(null); // State to store month data
+  const { theme, setTheme, themes } = useTheme();
 
   const[curGoals, setCurGoals] = useState([]);
 
@@ -69,6 +72,10 @@ const LandingPage = () => {
     }));
   };
 
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  };
+
   return (
     <div>
       <div className='page-flex'>
@@ -111,6 +118,18 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+      <div style={{ background: themes[theme].background }}>
+      <nav style={{ background: themes[theme].navbar }}>
+        {/* Navigation items */}
+      </nav>
+      <button style={{ background: themes[theme].button.color }} onClick={toggleTheme}>
+        Toggle Theme
+      </button>
+      {/* Example of using alternate button color */}
+      <button style={{ background: themes[theme].button.alternate2 }}>
+        Alternate Button
+      </button>
+    </div>
     </div>
   );
 };
