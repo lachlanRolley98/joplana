@@ -4,12 +4,20 @@ import silverImage from '../images/Silver.png'; // Import the image for bronze
 import goldImage from '../images/Gold.png'; // Import the image for bronze
 import ironImage from '../images/Iron.png'; // Import the image for bronze
 import rustImage from '../images/Rust.png'; // Import the image for bronze
+import lightWood from '../images/LightWood.jpg';
+import darkWood from '../images/DarkWood.jpg';
+import { red } from '@mui/material/colors';
 
 
 // Define your themes here
 const themes = {
   light: {
-    background: '#FFFFFF',
+    background: {
+      colour: 'red',
+      alternate: {
+        backgroundImage: `url(${darkWood})`,
+      },
+    },
     navbar: '#F0F0F0',
     button: {
       color: 'black',
@@ -24,7 +32,12 @@ const themes = {
     }
   },
   dark: {
-    background: '#333333',
+    background: {
+      colour: 'red',
+      alternate: {
+        backgroundImage: `url(${lightWood})`,
+      },
+    },
     navbar: '#444444',
     button: {
       color: 'black',

@@ -66,17 +66,16 @@ export const BigButton = ({ text, onClick }) => {
     variant="contained"
     sx={{
       whiteSpace: 'no-wrap',
-      width: '14vw',
+      width: '20vw',
+      height: '7vw',
       textTransform: 'none',
-      padding: '1vh',
-      fontSize: '2vh',
-      margin: '0',
-      marginTop: '1vh',
-      borderRadius: '5px',
+      padding: '0vh',
+      fontSize: ['1.5vh', '2.5vh', '3vh'], // Responsive font sizes
+      margin: '20px 40px',
+      borderRadius: '40px',
       backgroundColor: themes[theme].bigButton.color,
       fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
       display: 'inline-block',
-      height: '5vh',
       textAlign: 'center',
       '&:hover': {
         backgroundColor: themes[theme].button.color,
