@@ -15,6 +15,7 @@ import JournalPage from './components/JournalPage';
 import PlannerPage from './components/PlannerPage';
 import QuickSubmitPage from './components/QuickSubmitPage';
 import ReviewPage from './components/ReviewPage';
+import ExamplePage from './components/ExamplePage'
 
 
 
@@ -29,7 +30,7 @@ function App() {
             <Routes>
 
               <Route path="/" element={<LoginPage />} />
-              <Route path="/landing" element={<LandingPage />} />
+              <Route path="/Landing" element={<LandingPage />} />
               <Route path="/Codex" element={<CodexPage />} />
               <Route path="/Dreams" element={<DreamsPage />} />
               <Route path="/Goals" element={<GoalsPage />} />
@@ -37,6 +38,7 @@ function App() {
               <Route path="/Planner" element={<PlannerPage />} />
               <Route path="/QuickSubmit" element={<QuickSubmitPage />} />
               <Route path="/Review" element={<ReviewPage />} />
+              <Route path="/ex" element={<ExamplePage />} />
 
 
             </Routes>

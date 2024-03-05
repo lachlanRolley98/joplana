@@ -34,7 +34,7 @@ export const handleLogInUser = (email, password, setToken, navigate) => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userName', response.data.userName);
         localStorage.setItem('curGoals', response.data.curGoals);
-        navigate("/landing")
+        navigate("/Landing")
       })
       .catch(function (error) {
         console.log(error);

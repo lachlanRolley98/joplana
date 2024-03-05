@@ -1,0 +1,7 @@
+.all-page-container {
+    display: flex;
+  }
+
+  .content {
+    padding-top: 64px;
+  }

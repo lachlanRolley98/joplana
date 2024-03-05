@@ -1,4 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import bronzeImage from '../images/Bronze.png'; // Import the image for bronze
+import silverImage from '../images/Silver.png'; // Import the image for bronze
+import goldImage from '../images/Gold.png'; // Import the image for bronze
+import ironImage from '../images/Iron.png'; // Import the image for bronze
+import rustImage from '../images/Rust.png'; // Import the image for bronze
+
 
 // Define your themes here
 const themes = {
@@ -6,19 +12,46 @@ const themes = {
     background: '#FFFFFF',
     navbar: '#F0F0F0',
     button: {
-      color: 'red',
-      alternate: 'green',
+      color: 'black',
+      alternate1: 'red',
       alternate2: 'orange',
+      alternate3: 'yellow',
+      alternate4: 'green',
+      alternate5: 'blue',
     },
+    bigButton: {
+      color: 'black'
+    }
   },
   dark: {
     background: '#333333',
     navbar: '#444444',
     button: {
-      color: 'gold',
-      alternate: 'silver',
-      alternate2: 'purple',
+      color: 'black',
+      alternate1: {
+        backgroundImage: `url(${rustImage})`, // Bronze background image
+        boxShadow: '0px 4px 8px rgba(229, 228, 226, 0.5)', // Platinum color shadow
+      },
+      alternate2: {
+        backgroundImage: `url(${ironImage})`, // Bronze background image
+        boxShadow: '0px 4px 8px rgba(184, 115, 51, 0.5)', // Copper color shadow
+      },
+      alternate3: {
+        backgroundImage: `url(${bronzeImage})`, // Bronze background image
+        boxShadow: '0px 4px 8px rgba(205, 127, 50, 0.5)', // Bronze color shadow
+      },
+      alternate4: {
+        backgroundImage: `url(${silverImage})`, // Bronze background image
+        boxShadow: '0px 4px 8px rgba(192, 192, 192, 0.5)', // Silver color shadow
+      },
+      alternate5: {
+        backgroundImage: `url(${goldImage})`, // Bronze background image
+        boxShadow: '0px 4px 8px rgba(255, 215, 0, 0.5)', // Gold color shadow
+      },
     },
+    bigButton: {
+      color: 'indigo'
+    }
   },
 };
 
