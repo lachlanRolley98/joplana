@@ -87,3 +87,64 @@ export const BigButton = ({ text, onClick }) => {
   );
 };
 
+export const SmallButton = ({ text, onClick }) => {
+  const { theme, themes } = useTheme();
+
+  return (
+    <Button
+    onClick={onClick}
+    variant="contained"
+    sx={{
+      whiteSpace: 'no-wrap',
+      width: '20vw',
+      height: '3.5vw',
+      textTransform: 'none',
+      padding: '0vh',
+      fontSize: ['0.9vh', '1.5vh', '2vh'], // Responsive font sizes
+      margin: '10px 20px',
+      borderRadius: '20px',
+      backgroundColor: themes[theme].bigButton.color,
+      fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
+      display: 'inline-block',
+      textAlign: 'center',
+      '&:hover': {
+        backgroundColor: themes[theme].button.color,
+        transform: 'scale(1.04)'
+      }
+    }}>
+      {text}
+    </Button>
+  );
+};
+
+export const DreamsPillContainer = ({ title, pills, onAdd, onRemove, onSelect }) => {
+  return (
+    <div className="pill-container">
+      <h2>{title}</h2>
+      <div className="pills">
+        {pills.map((pill, index) => (
+          <button
+            key={index}
+            className={index}
+            onClick={() => onSelect(index)}
+          >
+            {pill}
+          </button>
+        ))}
+      </div>
+      <div className="pill-actions">
+        <button onClick={onAdd} style={{marginTop: '10px'}}>Add</button>
+        <button onClick={onRemove} style={{marginTop: '10px'}}>
+          Remove
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export const FullInput = ({ stateValue, stateFunction, placeholder }) => {
+  return (
+    <textarea className='Full-input' type="text" placeholder={placeholder} value={stateValue} onChange={e => stateFunction(e.target.value)}></textarea>
+  );
+};
+
