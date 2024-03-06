@@ -1,12 +1,22 @@
 .all-page-container {
-    display: flex;
-    flex: 1; /* Add this line */
-    height: 100vh; /* Add this line */
-  }
+  display: flex;
+  flex: 1; /* Add this line */
+  height: 100vh; /* Add this line */
+}
 
-  .content {
-    padding-top: 64px;
-    width: 100%; /* Ensure content takes full width */
-    height: 100%; /* Ensure content takes full height */
-    overflow-y: auto; /* Add scroll if content overflows */
-  }
+.content {
+  padding-top: 64px;
+  width: 100%; /* Ensure content takes full width */
+  height: 100%; /* Ensure content takes full height */
+  overflow-y: auto; /* Add scroll if content overflows */
+}
+
+.main-flex{
+  display: flex;
+  flex-direction: column;
+  /*background-color: aqua;*/
+  flex: 1;
+  align-items: stretch;
+  margin: 4vh 4vw;
+  height: 91%;
+}

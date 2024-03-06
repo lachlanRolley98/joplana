@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import MiniDrawer from './SideDraw';
 import { useTheme } from './ThemeContext'; // Import useTheme hook
-import { DreamsPillContainer, FullInput, SmallButton } from './Containers';
+import { PillContainer, FullInput, SmallButton } from './Containers';
 import '../style/AllPage.css'; // Import CSS file for custom styles
 import '../style/PageSpecific/Dreams.css'; // Import CSS file for custom styles
 
@@ -29,9 +29,10 @@ const DreamsPage = () => {
       <MiniDrawer/>
       <div className='content'>
         <div className='main-flex'>
+          <h3 style = {{textAlign: 'center', marginTop: '0px'}}>Dreams</h3>
           <div className='pill-text-holder'>
             <div className='pill-holder'>
-            <DreamsPillContainer
+            <PillContainer
               title="Dream Triggers"
               pills={pills}
               onAdd={addPill}

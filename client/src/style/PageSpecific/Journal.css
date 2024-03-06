@@ -1,0 +1,12 @@
+.text-holder{
+  display: flex;
+  flex:8;
+  /*background-color: aqua;*/
+}
+
+.but-holder{
+  display: flex;
+  flex:1;
+  /*background-color: blueviolet;*/
+  justify-content: space-evenly;
+}

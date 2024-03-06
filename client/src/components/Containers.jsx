@@ -117,7 +117,7 @@ export const SmallButton = ({ text, onClick }) => {
   );
 };
 
-export const DreamsPillContainer = ({ title, pills, onAdd, onRemove, onSelect }) => {
+export const PillContainer = ({ title, pills, onAdd, onRemove, onSelect }) => {
   return (
     <div className="pill-container">
       <h2>{title}</h2>
@@ -134,17 +134,57 @@ export const DreamsPillContainer = ({ title, pills, onAdd, onRemove, onSelect })
       </div>
       <div className="pill-actions">
         <button onClick={onAdd} style={{marginTop: '10px'}}>Add</button>
-        <button onClick={onRemove} style={{marginTop: '10px'}}>
-          Remove
-        </button>
+        <button onClick={onRemove} style={{marginTop: '10px'}}>Remove</button>
       </div>
     </div>
   );
 };
 
+// need too add onclicks in the TasPilCon
+export const TasksPillContainer = ({ title, pills, onAdd, onRemove, onSelect }) => {
+  return (
+    <div className="pill-container">
+      <div>
+        <h2 style={{marginBottom: '4px'}}>{title}</h2>
+        <div className='tasks-three-buttons'>
+          <button>today</button>
+          <button>Week</button>
+          <button>Month</button>
+          <button>All</button>
+        </div>
+      </div>
+      <div className="pills">
+        {pills.map((pill, index) => (
+          <button
+            key={index}
+            className={index}
+            onClick={() => onSelect(index)}
+          >
+            {pill}
+          </button>
+        ))}
+      </div>
+      <div className="pill-actions">
+        <button onClick={onAdd} style={{marginTop: '10px'}}>Add</button>
+        <button onClick={onRemove} style={{marginTop: '10px'}}>Remove</button>
+      </div>
+    </div>
+  );
+};
+
+
+
+// Full-input is in Dreams
 export const FullInput = ({ stateValue, stateFunction, placeholder }) => {
   return (
     <textarea className='Full-input' type="text" placeholder={placeholder} value={stateValue} onChange={e => stateFunction(e.target.value)}></textarea>
+  );
+};
+
+// Full-input is in Planner
+export const ThinInput = ({ stateValue, stateFunction, placeholder }) => {
+  return (
+    <textarea className='Full-input-Planner' type="textarea" placeholder={placeholder} value={stateValue} onChange={e => stateFunction(e.target.value)}></textarea>
   );
 };
 
