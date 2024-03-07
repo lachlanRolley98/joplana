@@ -1,0 +1,27 @@
+.recap-container-quick{
+  display: flex;
+  /*background-color: rgb(0, 255, 42);*/
+  flex:4;
+}
+
+.tommorow-plan-container{
+  display: flex;
+  /*background-color: rgb(251, 255, 0);*/
+  flex:1.5;
+
+}
+
+.habits-container{
+  display: flex;
+  /*background-color: rgb(0, 255, 255);*/
+  flex:4;
+
+}
+
+.submit-buttons-container{
+  display: flex;
+  /*background-color: rgb(255, 0, 212);*/
+  flex:1;
+  justify-content: space-evenly;
+
+}

@@ -33,11 +33,3 @@
   height: 90%;
   margin: 1%;
 }
-
-.graph-container{
-  display: flex;
-  background-color: brown;
-  height: 34vh;
-  width: 90vw;
-  margin: 0vh 5vw;
-}

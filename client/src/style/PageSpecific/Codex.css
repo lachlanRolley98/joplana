@@ -1,0 +1,23 @@
+.three-text-holders{
+  display: flex;
+  /*background-color: aqua;*/
+  flex: 1;
+  align-items: stretch;
+  margin: 4vh 4vw;
+  height: 91%;
+}
+
+.push-pull-holder{
+  display: flex;
+  height: 100%;
+  /*background-color: rgb(255, 0, 255);*/
+  flex: 1;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.codex-holder{
+  display: flex;
+  /*background-color: rgb(255, 51, 0);*/
+  flex: 2;
+}

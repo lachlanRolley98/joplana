@@ -1,6 +1,8 @@
 import { React } from 'react';
 import Button from '@mui/material/Button';
 import { useTheme } from './ThemeContext'; // Path to your useTheme hook
+import TextField from '@mui/material/TextField';
+
 
 
 
@@ -172,6 +174,90 @@ export const TasksPillContainer = ({ title, pills, onAdd, onRemove, onSelect }) 
   );
 };
 
+// ok takes pills called goals
+// all classNames in Goals
+export const GoalsContainer = ({title, goals}) => {
+  return(
+    <div className="goals-container">
+      <div>
+        <h2 style={{marginBottom: '4px'}}>{title}</h2>
+      </div>
+      <div className="goals-holder">
+        {goals.map((goals, index) => (
+          <div className='goal-individual'>
+            <h3>{goals.title}</h3>
+            <p>{goals.description}</p>
+            <ul>
+              {goals.habits.map((habit, habitIndex) => (
+                <li key = {habitIndex}> {habit} </li>
+              ))}
+            </ul>
+            <button>Add Habit</button>
+            <button>Remove Habit</button>
+            <button>Delete Goal</button>
+          </div>
+        ))}
+      </div>
+      <div className="pill-actions">
+        <button onClick={() => {console.log('hello world')}} style={{marginTop: '10px'}}>Add Habit</button>
+      </div>
+    </div>
+  );
+};
+
+export const HabitsContainer = ({title, habits}) => {
+  return(
+    <div className="habits-container">
+      <div>
+        <h2 style={{marginBottom: '4px'}}>{title}</h2>
+      </div>
+      <div className="habits-holder">
+        {habits.map((habit, index) => (
+          <div className='habit-individual'>
+            <h3>{habit.title}</h3>
+            <div className='habit-sub-buttons'>
+              <button>1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>4</button>
+              <button>5</button>
+              <button>rest</button>
+            </div>
+            <button>Delete Habit</button>
+          </div>
+        ))}
+      </div>
+      <div className="pill-actions">
+        <button onClick={() => {console.log('hello world')}} style={{marginTop: '10px'}}>Add Habit</button>
+      </div>
+    </div>
+  );
+};
+
+export const QuickHabitsContainer = ({habits}) => {
+  return(
+    <div className="habits-container">
+      <div className="habits-holder">
+        {habits.map((habit, index) => (
+          <div className='habit-individual'>
+            <h3>{habit.title}</h3>
+            <div className='habit-sub-buttons'>
+              <button>1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>4</button>
+              <button>5</button>
+              <button>rest</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
+
 
 
 // Full-input is in Dreams
@@ -187,4 +273,72 @@ export const ThinInput = ({ stateValue, stateFunction, placeholder }) => {
     <textarea className='Full-input-Planner' type="textarea" placeholder={placeholder} value={stateValue} onChange={e => stateFunction(e.target.value)}></textarea>
   );
 };
+
+
+export const ReadOnlyDateText = ({ date, text }) => {
+  return (
+    <TextField
+      id="outlined-read-only-input"
+      label={date}
+      fullWidth
+      multiline
+      defaultValue={text ? text : 'No Input'}
+      InputProps={{
+        readOnly: true,
+      }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          backgroundColor: 'white', // Background color for the input
+          marginTop: '7px',
+          marginBottom: '15px'
+        },
+      }}
+    />
+  );
+};
+
+export const PictureWithLines = ({ values }) => {
+  // Calculate the position of the point based on the values
+  const calculatePoints = (values) => {
+    const totalValues = values.length;
+    const pointArray = [];
+    const stepX = 700 / totalValues; // Step size for horizontal movement
+    let currentX = stepX / 2; // Start from the middle of the first step
+    const startY = 156; // Start Y position
+    let currentY = startY;
+
+    for (let i = 0; i < totalValues; i++) {
+      const value = values[i];
+      const direction = value >= 3 ? 1 : -1; // Positive for values 3, 4, 5 and negative for 1, 2
+      const stepY = (value % 3) * 20; // Adjust Y step based on the value
+      const endX = currentX + stepX; // End X position for the line
+      const endY = currentY - stepY * direction; // End Y position for the line
+      pointArray.push([currentX, currentY]); // Start point
+      pointArray.push([endX, endY]); // End point
+      currentX = endX; // Update current X position for the next step
+      currentY = endY; // Update current X position for the next step
+    }
+
+    return pointArray;
+  };
+
+  const points = calculatePoints(values);
+
+  // Convert point coordinates to SVG path
+  const path = points.map(([x, y], index) => {
+    return index === 0 ? `M ${x},${y}` : `L ${x},${y}`;
+  });
+
+  const svgPath = path.join(' ');
+
+  return (
+    <div className="picture-container">
+      <svg viewBox="0 0 100% 100%" className="svg-container">
+        <path d={svgPath} fill="none" stroke="black" strokeWidth="1" />
+      </svg>
+    </div>
+  );
+};
+
+
 
