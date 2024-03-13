@@ -11,7 +11,7 @@ const LandingPage = () => {
   const [tplan, setTplan] = useState('');
   const [dream, setDream] = useState('');
   const [goals, setGoals] = useState({testgoal1: 1, testgoal2: 2, testgoal3: 3, testgoal4: 4, testgoal5: 5})
-  const [date, setDate] = useState('21-02-2023');
+  const [date, setDate] = useState('11-9-2023');
   const [addGoal, setAddGoal] = useState('');
   const [removeGoal, setRemoveGoal] = useState('');
   const [goalValues, setGoalValues] = useState({}); // State to store the values of each text box
@@ -37,6 +37,7 @@ const LandingPage = () => {
     try {
       const data = await handleGetMonth(token, date); // Call handleGetMonth
       setMonthData(data); // Update monthData state with returned data
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -92,6 +93,7 @@ const LandingPage = () => {
             <input className='full-width' type="text" value={dream} onChange={e => setDream(e.target.value)}></input>
             <button onClick={ () => {handleSubmitDay (token, recap, tplan, dream, date, goalValues)} }>submit</button>
             <button onClick={ () => {console.log(monthData)} }>Print Month</button>
+            <button onClick={ () => handleFetchMonthData }>Print Month after getting</button>
           </div>
           <div className='cards-container'>
             <h1>Goal Cards</h1>
