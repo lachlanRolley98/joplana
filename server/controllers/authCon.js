@@ -109,7 +109,8 @@ exports.signin = (req, res) => {
                 success: true,
                 token: access_token,
                 userName: user.userName,
-                curGoals: user.curGoals
+                curGoals: user.curGoals,
+                dreamTriggers: user.dreamTriggers
               });
             }
           });
@@ -162,3 +163,46 @@ exports.updateGoals = (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+exports.changeTriggers = (req, res) => {
+  console.log('we made it')
+  try {
+    /* AUTHORISATION CHECK --  AUTHORISATION CHECK */
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+    // Check if the authorization header is in the correct format
+    const tokenParts = authHeader.split(' ');
+    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+      return res.status(401).json({ message: "Invalid authorization header format" });
+    }
+    const token = tokenParts[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" });
+      }
+      /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
+      const userId = decodedToken.userId;
+      let {updatedTriggers} = req.body;
+      console.log(updatedTriggers);
+
+      User.findOneAndUpdate(
+        { _id: userId },
+        { $set: {dreamTriggers: updatedTriggers} },
+      )
+        .then(updatedUser => {
+          console.log('Triggers updated:', updatedUser);
+        })
+        .catch(error => {
+          console.error('Error updating triggers:', error);
+        });
+
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+

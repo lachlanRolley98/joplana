@@ -1,7 +1,17 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import Button from '@mui/material/Button';
 import { useTheme } from './ThemeContext'; // Path to your useTheme hook
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import dayjs from 'dayjs'; // Import dayjs library
+import 'dayjs/locale/en'; // Import English locale for dayjs
+import utc from 'dayjs/plugin/utc'; // Import UTC plugin for dayjs
+import localizedFormat from 'dayjs/plugin/localizedFormat'; //
 
 
 
@@ -119,7 +129,7 @@ export const SmallButton = ({ text, onClick }) => {
   );
 };
 
-export const PillContainer = ({ title, pills, onAdd, onRemove, onSelect }) => {
+export const PillContainer = ({ title, pills, onAdd, onRemove, onSelect, onSave, placeholder, stateValue, stateFunction }) => {
   return (
     <div className="pill-container">
       <h2>{title}</h2>
@@ -134,9 +144,14 @@ export const PillContainer = ({ title, pills, onAdd, onRemove, onSelect }) => {
           </button>
         ))}
       </div>
+
       <div className="pill-actions">
-        <button onClick={onAdd} style={{marginTop: '10px'}}>Add</button>
-        <button onClick={onRemove} style={{marginTop: '10px'}}>Remove</button>
+        <textarea className='Full-input-Planner' type="input" placeholder={placeholder} value={stateValue} onChange={e => stateFunction(e.target.value)}></textarea>
+        <div className='pill-actions-buttons'>
+          <button onClick={onAdd} style={{marginTop: '10px'}}>Add</button>
+          <button onClick={onRemove} style={{marginTop: '10px'}}>Remove</button>
+          <button onClick={onSave} style={{marginTop: '10px'}}>Save</button>
+        </div>
       </div>
     </div>
   );
@@ -339,6 +354,55 @@ export const PictureWithLines = ({ values }) => {
     </div>
   );
 };
+
+const style2 = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+export const BasicModal = (props) => {
+  const { open, setOpen, setDate, handleSubmDream } = props; // Destructure props to access open and setOpen
+  const handleClose = () => setOpen(false);
+  const [value, setValue] = useState(null); // calender likes this format
+
+  const handleDateChange = (newValue) => {
+    setDate(dayjs(newValue).format('DD-MM-YYYY'));
+    setValue(newValue)
+  };
+
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style2}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Please Select a date
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateCalendar
+                value={value} onChange={(newValue) => handleDateChange(newValue)}
+              />
+            </LocalizationProvider>
+            <SmallButton text={'submit'} onClick={() => handleSubmDream()}/>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
 
 
 

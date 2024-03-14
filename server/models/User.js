@@ -18,6 +18,10 @@ const userSchema = new Schema({
   curGoals: {
     type: [String],
     default: []
+  },
+  dreamTriggers: {
+    type: String,
+    default: ''
   }
 
 

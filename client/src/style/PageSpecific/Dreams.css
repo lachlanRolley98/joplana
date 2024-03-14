@@ -64,6 +64,11 @@
 .pill-actions {
   display: flex;
   justify-content: space-around; /* Space out the Add and Remove buttons */
+  flex-direction: column;
+}
+.pill-actions-buttons {
+  display: flex;
+  justify-content: space-around; /* Space out the Add and Remove buttons */
 }
 
 .pill-container button {
@@ -92,4 +97,10 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds a slight shadow for depth */
   width: 100%;
   font-size: large;
+}
+
+.not-tall{
+  height: 30px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
