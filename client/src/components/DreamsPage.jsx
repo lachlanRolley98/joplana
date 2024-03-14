@@ -2,7 +2,7 @@ import { React, useState, useContext, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 import MiniDrawer from './SideDraw';
 import { useTheme } from './ThemeContext'; // Import useTheme hook
-import { PillContainer, FullInput, SmallButton, BasicModal } from './Containers';
+import { PillContainer, FullInput, SmallButton, BasicCalSubModal } from './Containers';
 import { handleSubmitDream, handleChangeTriggers } from './HTTP/Dreams'
 import { getCurDate } from './Helpers';
 import { useMonth } from './MonthContext'
@@ -21,7 +21,6 @@ const DreamsPage = () => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
-
 
   useEffect(() => {
     // Retrieve dream triggers from localStorage and split the string into an array
@@ -131,7 +130,7 @@ const DreamsPage = () => {
           </div>
         </div>
       </div>
-      <BasicModal open={open} setOpen={setOpen} setDate={setDate} handleSubmDream={handleSubmDream} />
+      <BasicCalSubModal open={open} setOpen={setOpen} setDate={setDate} handleSub={handleSubmDream} />
     </div>
   );
 };

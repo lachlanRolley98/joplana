@@ -367,8 +367,8 @@ const style2 = {
   p: 4,
 };
 
-export const BasicModal = (props) => {
-  const { open, setOpen, setDate, handleSubmDream } = props; // Destructure props to access open and setOpen
+export const BasicCalSubModal = (props) => {
+  const { open, setOpen, setDate, handleSub } = props; // Destructure props to access open and setOpen
   const handleClose = () => setOpen(false);
   const [value, setValue] = useState(null); // calender likes this format
 
@@ -395,7 +395,7 @@ export const BasicModal = (props) => {
                 value={value} onChange={(newValue) => handleDateChange(newValue)}
               />
             </LocalizationProvider>
-            <SmallButton text={'submit'} onClick={() => handleSubmDream()}/>
+            <SmallButton text={'submit'} onClick={() => handleSub()}/>
           </Typography>
         </Box>
       </Modal>
