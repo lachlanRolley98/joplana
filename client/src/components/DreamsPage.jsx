@@ -5,18 +5,19 @@ import { useTheme } from './ThemeContext'; // Import useTheme hook
 import { PillContainer, FullInput, SmallButton, BasicModal } from './Containers';
 import { handleSubmitDream, handleChangeTriggers } from './HTTP/Dreams'
 import { getCurDate } from './Helpers';
+import { useMonth } from './MonthContext'
 import '../style/AllPage.css'; // Import CSS file for custom styles
 import '../style/PageSpecific/Dreams.css'; // Import CSS file for custom styles
 
 const DreamsPage = () => {
   const { token } = useContext(AuthContext);
   const { theme, themes } = useTheme();
+  const { monthData, updateMonth } = useMonth();
   const [date, setDate] = useState(getCurDate()); // Initialize with current date
   const [pills, setPills] = useState([]);
   const [selectedPillIndex, setSelectedPillIndex] = useState(null);
   const [dreamText, setDreamText] = useState('');
   const [addTriggerText, setAddTriggerText] = useState('');
-  const [monthData, setMonthData] = useState(null); // State to store month data
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -73,9 +74,10 @@ const DreamsPage = () => {
     console.log('trying');
     const tdate = getCurDate()
     try {
-      const data = await handleSubmitDream(token, tdate, dreamText, setMonthData);
+      const data = await handleSubmitDream(token, tdate, dreamText, updateMonth);
       console.log(data);
-      setDreamText('Recorded')
+      localStorage.setItem('tdream', dreamText);
+      alert('Dream Recorded');
 
     } catch (error) {
       console.log(error);
@@ -87,9 +89,9 @@ const DreamsPage = () => {
   const handleSubmDream = async () => {
     console.log('trying');
     try {
-      const data = await handleSubmitDream(token, date, dreamText, setMonthData);
+      const data = await handleSubmitDream(token, date, dreamText, updateMonth);
       console.log(data);
-      setDreamText('Recorded')
+      alert('Dream Recorded');
 
     } catch (error) {
       console.log(error);

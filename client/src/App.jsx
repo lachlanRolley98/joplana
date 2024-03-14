@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AuthProvider } from './components/AuthContext'; // Import AuthProvider
 import { ThemeProvider  } from './components/ThemeContext';
+import { MonthProvider } from './components/MonthContext'
 
 
 import LandingPage from './components/LandingPage';
@@ -26,23 +27,24 @@ function App() {
     <div className="App">
       <ThemeProvider>
         <AuthProvider>
-          <BrowserRouter>
-            <Routes>
+          <MonthProvider>
+            <BrowserRouter>
+              <Routes>
 
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/Landing" element={<LandingPage />} />
-              <Route path="/Codex" element={<CodexPage />} />
-              <Route path="/Dreams" element={<DreamsPage />} />
-              <Route path="/Goals" element={<GoalsPage />} />
-              <Route path="/Journal" element={<JournalPage />} />
-              <Route path="/Planner" element={<PlannerPage />} />
-              <Route path="/QuickSubmit" element={<QuickSubmitPage />} />
-              <Route path="/Review" element={<ReviewPage />} />
-              <Route path="/ex" element={<ExamplePage />} />
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/Landing" element={<LandingPage />} />
+                <Route path="/Codex" element={<CodexPage />} />
+                <Route path="/Dreams" element={<DreamsPage />} />
+                <Route path="/Goals" element={<GoalsPage />} />
+                <Route path="/Journal" element={<JournalPage />} />
+                <Route path="/Planner" element={<PlannerPage />} />
+                <Route path="/QuickSubmit" element={<QuickSubmitPage />} />
+                <Route path="/Review" element={<ReviewPage />} />
+                <Route path="/ex" element={<ExamplePage />} />
 
-
-            </Routes>
-          </BrowserRouter>
+              </Routes>
+            </BrowserRouter>
+          </MonthProvider>
         </AuthProvider>
       </ThemeProvider>
     </div>
