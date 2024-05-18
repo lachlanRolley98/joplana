@@ -5,6 +5,12 @@ import { GoalsContainer, HabitsContainer, ExampleButton } from './Containers'
 import '../style/AllPage.css'; // Import CSS file for custom styles
 import '../style/PageSpecific/Goals.css'; // Import CSS file for custom styles
 
+{/* <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={1}></ExampleButton>
+<ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={2}></ExampleButton>
+<ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={3}></ExampleButton>
+<ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={4}></ExampleButton>
+<ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={5}></ExampleButton> */}
+
 
 // make a goals container that can take in title, description, and habits(do habits as an array ?)
 const GoalsPage = () => {
@@ -45,12 +51,6 @@ const GoalsPage = () => {
               ></HabitsContainer>
             </div>
           </div>
-          <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={1}></ExampleButton>
-          <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={2}></ExampleButton>
-          <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={3}></ExampleButton>
-          <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={4}></ExampleButton>
-          <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={5}></ExampleButton>
-
         </div>
       </div>
     </div>

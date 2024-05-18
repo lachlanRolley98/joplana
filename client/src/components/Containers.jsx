@@ -214,7 +214,7 @@ export const GoalsContainer = ({title, goals}) => {
         ))}
       </div>
       <div className="pill-actions">
-        <button onClick={() => {console.log('hello world')}} style={{marginTop: '10px'}}>Add Habit</button>
+        <button onClick={() => {console.log('hello world')}} style={{marginTop: '10px'}}>Add goal</button>
       </div>
     </div>
   );
