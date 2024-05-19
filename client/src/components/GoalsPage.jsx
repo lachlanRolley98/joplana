@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { handleAddGoal } from './HTTP/Goal'
+import { handleAddGoal, handleAddHabitToGoal, handledeleteHabitFromGoal, handledeleteGoal } from './HTTP/Goal'
 
 
 {/* <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={1}></ExampleButton>
@@ -52,16 +52,43 @@ const GoalsPage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const createUser = () => {
-    alert('clicked')
-  };
 
   const addGoal = async () => {
+    try {
+      const data = await handleAddGoal(token, goalCreateTitle); // Pass the actual value of goalCreateTitle
+      alert('goal added');
+    } catch (error) {
+      console.log(error);
+      alert('nien');
+    }
+  };
+
+  const addHabitToGoal = async () => {
     console.log('trying');
     try {
-      console.log(`goalCreateTitle is ${goalCreateTitle}`)
-      const data = await handleAddGoal(token, goalCreateTitle); // Pass the actual value of goalCreateTitle
-      console.log(data);
+      const data = await handleAddHabitToGoal(token, 'pear', 'hat'); // Pass the actual value of goalCreateTitle
+      alert('goal set');
+    } catch (error) {
+      console.log(error);
+      alert('nien');
+    }
+  };
+
+  const removeHabitFromGoal = async () => {
+    console.log('trying');
+    try {
+      const data = await handledeleteHabitFromGoal(token, 'pear', 'hat'); // Pass the actual value of goalCreateTitle
+      alert('goal set');
+    } catch (error) {
+      console.log(error);
+      alert('nien');
+    }
+  };
+
+  const RemoveGoal = async () => {
+    console.log('trying');
+    try {
+      const data = await handledeleteGoal(token, 'pear'); // Pass the actual value of goalCreateTitle
       alert('goal set');
     } catch (error) {
       console.log(error);
@@ -99,6 +126,9 @@ const GoalsPage = () => {
                 </Box>
               </Modal>
           </div>
+          <Button variant="contained" onClick={ () => {addHabitToGoal()} }>Add Habit</Button>
+          <Button variant="contained" onClick={ () => {removeHabitFromGoal()} }>remove Habit</Button>
+          <Button variant="contained" onClick={ () => {RemoveGoal()} }>remove Goal</Button>
         </div>
       </div>
     </div>

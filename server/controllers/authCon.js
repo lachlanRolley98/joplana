@@ -230,23 +230,25 @@ exports.addGoal = (req, res) => {
       /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
       const { goal } = req.body; // Assuming the client sends the title of the goal
       const userId = decodedToken.userId;
-      console.log(`kumquat ${goal}`)
+      console.log(`Controller ${goal}`)
+
+      const newGoal = { goalName: goal, habits: [] };
 
       User.findByIdAndUpdate(
         userId,
-        { $set: { [`curGoals.${goal}`]: {} } },
-        { new: true } // This option returns the updated document
+        { $push: { curGoals: newGoal } },
+        { new: true }
       )
-        .then(updatedUser => {
-          if (!updatedUser) {
-            return res.status(404).json({ message: "User not found" });
-          }
-          res.status(200).json({
-            message: 'Goal added successfully',
-            updatedUser
-          });
-        })
-        .catch(err => res.status(500).json({ errors: err }));
+      .then(updatedUser => {
+        if (!updatedUser) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({
+          message: 'Goal added successfully',
+          updatedUser
+        });
+      })
+      .catch(err => res.status(500).json({ errors: err }));
     });
   } catch (error) {
     console.error("Error:", error);
@@ -254,26 +256,145 @@ exports.addGoal = (req, res) => {
   }
 };
 
-// Add a Key to an Existing Object
-exports.addKeyToObject = (req, res) => {
-  const { objectName, keyName, value } = req.body;
-  User.findByIdAndUpdate(req.userId, { $set: { [`curGoals.${objectName}.${keyName}`]: value } })
-    .then(() => res.status(200).json({ message: 'Key added successfully' }))
-    .catch(err => res.status(500).json({ errors: err }));
+exports.addHabitToGoal = (req, res) => {
+  try {
+    /* AUTHORISATION CHECK --  AUTHORISATION CHECK */
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+
+    // Check if the authorization header is in the correct format
+    const tokenParts = authHeader.split(' ');
+    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+      return res.status(401).json({ message: "Invalid authorization header format" });
+    }
+
+    const token = tokenParts[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" });
+      }
+
+      /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
+      const { goal, habit } = req.body;
+      const userId = decodedToken.userId;
+      console.log(`Received data: goal=${goal}, habit=${habit}, userId=${userId}`);
+
+      User.findByIdAndUpdate(
+        userId,
+        { $push: { "curGoals.$[goal].habits": habit } },
+        { arrayFilters: [{ "goal.goalName": goal }], new: true }
+      )
+      .then(updatedUser => {
+        if (!updatedUser) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({
+          message: 'Habit added successfully',
+          updatedUser
+        });
+      })
+      .catch(err => res.status(500).json({ errors: err }));
+    });
+
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 // Delete a Key from an Object
-exports.deleteKeyFromObject = (req, res) => {
-  const { objectName, keyName } = req.body;
-  User.findByIdAndUpdate(req.userId, { $unset: { [`curGoals.${objectName}.${keyName}`]: "" } })
-    .then(() => res.status(200).json({ message: 'Key deleted successfully' }))
-    .catch(err => res.status(500).json({ errors: err }));
+exports.deleteHabitFromGoal = (req, res) => {
+  try {
+    /* AUTHORISATION CHECK --  AUTHORISATION CHECK */
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+
+    // Check if the authorization header is in the correct format
+    const tokenParts = authHeader.split(' ');
+    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+      return res.status(401).json({ message: "Invalid authorization header format" });
+    }
+
+    const token = tokenParts[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" });
+      }
+
+      /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
+      const { goal, habit } = req.body;
+      const userId = decodedToken.userId;
+
+      User.findByIdAndUpdate(
+        userId,
+        { $pull: { "curGoals.$[goal].habits": habit } },
+        { arrayFilters: [{ "goal.goalName": goal }], new: true }
+      )
+      .then(updatedUser => {
+        if (!updatedUser) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({
+          message: 'Habit removed successfully',
+          updatedUser
+        });
+      })
+      .catch(err => res.status(500).json({ errors: err }));
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 // Delete an Entire Object
-exports.deleteObject = (req, res) => {
-  const { objectName } = req.body;
-  User.findByIdAndUpdate(req.userId, { $unset: { [`curGoals.${objectName}`]: "" } })
-    .then(() => res.status(200).json({ message: 'Object deleted successfully' }))
-    .catch(err => res.status(500).json({ errors: err }));
+exports.deleteGoal = (req, res) => {
+  try {
+    /* AUTHORISATION CHECK --  AUTHORISATION CHECK */
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+
+    // Check if the authorization header is in the correct format
+    const tokenParts = authHeader.split(' ');
+    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+      return res.status(401).json({ message: "Invalid authorization header format" });
+    }
+
+    const token = tokenParts[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" });
+      }
+
+      /* AUTHORISATION VALID LOGIC --  AUTHORISATION VALID LOGIC */
+      const { goal } = req.body;
+      const userId = decodedToken.userId;
+
+      User.findByIdAndUpdate(
+        userId,
+        { $pull: { curGoals: { goalName: goal } } },
+        { new: true }
+      )
+      .then(updatedUser => {
+        if (!updatedUser) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({
+          message: 'Goal deleted successfully',
+          updatedUser
+        });
+      })
+      .catch(err => res.status(500).json({ errors: err }));
+    });
+
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };

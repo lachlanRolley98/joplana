@@ -15,22 +15,22 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  curGoals: {
-    type: Map,
-    of: new Schema({
-      type: Map,
-      of: String
-    }),
-    default: {}
-  },
+  curGoals: [
+    {
+      goalName: {
+        type: String,
+        required: true,
+      },
+      habits: [String], // Array of strings representing habits
+    }
+  ],
   dreamTriggers: {
     type: String,
     default: ''
   }
-
-
-}, {timestamps: true,
-    collection: 'users'
+}, {
+  timestamps: true,
+  collection: 'users'
 });
 
 module.exports = mongoose.model('User', userSchema);
