@@ -16,8 +16,12 @@ const userSchema = new Schema({
     required: true,
   },
   curGoals: {
-    type: [String],
-    default: []
+    type: Map,
+    of: new Schema({
+      type: Map,
+      of: String
+    }),
+    default: {}
   },
   dreamTriggers: {
     type: String,
