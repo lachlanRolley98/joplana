@@ -11,17 +11,26 @@
 
 }
 
-.habits-container{
-  display: flex;
-  /*background-color: rgb(0, 255, 255);*/
-  flex:4;
-
-}
-
 .submit-buttons-container{
   display: flex;
   /*background-color: rgb(255, 0, 212);*/
   flex:1;
   justify-content: space-evenly;
 
+}
+
+.habits-holder{
+  /*background-color: rgb(10, 207, 233);*/
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.habit-individual{
+  background-color: rgb(235, 15, 187);
+  display:flex;
+  margin: 20px;
+  flex-direction: column;
+  border-radius: 15px;
+  padding: 10px;
 }

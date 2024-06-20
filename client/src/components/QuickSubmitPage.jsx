@@ -50,7 +50,7 @@ const QuickSubmitPage = () => {
           <div className='tommorow-plan-container'>
             <ThinInput stateValue={tommorowPlan} stateFunction={setTommorowPlan} placeholder="Tommorow Plan"/>
           </div>
-          <div className='habits-container'>
+          <div className='habits-holder'>
             <QuickHabitsContainer
               title={'Habits'}
               habits={habits}

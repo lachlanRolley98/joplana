@@ -1,21 +1,5 @@
-.goals-habits-flex{
-  display: flex;
-  background-color: rgb(229, 255, 0);
-}
-
-.goals-flex{
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(0, 255, 42);
-}
-
-.habits-flex{
-  display: flex;
-  background-color: rgb(255, 81, 0);
-}
-
 .goal-container {
-  background-color: red;
+  background-color: rgb(255, 255, 255);
   padding: 20px;
   margin: 10px;
   border-radius: 10px;
@@ -23,29 +7,14 @@
 }
 
 .habit-button {
-  margin: 5px;
+  background-color: brown;
+  margin: 0,15px,0,15px;
 }
 
-.goals-holder{
-  background-color: rgb(29, 32, 190);
+.goal-text {
+  color: blueviolet;
+  text-align: center;
 }
 
-.goal-individual{
-  background-color: rgb(182, 25, 25);
-}
 
-.habits-holder{
-  /*background-color: crimson;*/
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
 
-.habit-individual{
-  background-color: rgb(235, 15, 187);
-  display:flex;
-  margin: 20px;
-  flex-direction: column;
-  border-radius: 15px;
-  padding: 10px;
-}

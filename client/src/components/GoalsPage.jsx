@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 import { useMonth } from './MonthContext'
+import { SmallButton } from './Containers';
+
 
 import MiniDrawer from './SideDraw';
 import { useTheme } from './ThemeContext'; // Import useTheme hook
@@ -171,10 +173,12 @@ const GoalsPage = () => {
       <MiniDrawer/>
       <div className='content'>
         <div className='main-flex'>
-          <h3>goals</h3>
+          <h3 style = {{textAlign: 'center', marginTop: '0px'}}>Goals</h3>
           <div>
-            <Button variant="contained" onClick={handleOpenCre}>Create Goal</Button>
-            <Button variant="contained" onClick={handleOpenDel}>Delete Goal</Button>
+            <SmallButton text={'Create Goal'} onClick={() => handleOpenCre()}/>
+            <SmallButton text={'Delete Goal'} onClick={() => handleOpenDel()}/>
+            <SmallButton text={'Create Habit'} onClick={() => handleOpenCreHab()}/>
+            <SmallButton text={'Delete Habit'} onClick={() => handleOpenDelHab()}/>
             <Modal
               open={open}
               onClose={handleClose}
@@ -201,8 +205,6 @@ const GoalsPage = () => {
               </Modal>
           </div>
           <div>
-            <Button variant="contained" onClick={handleOpenCreHab}>Create Habit</Button>
-            <Button variant="contained" onClick={handleOpenDelHab}>Delete Habit</Button>
             <Modal
               open={openHab}
               onClose={handleCloseHab}
@@ -229,20 +231,10 @@ const GoalsPage = () => {
                 </Box>
               </Modal>
           </div>
-
-
-
-          <div>
-            <Button variant="contained" onClick={ () => {addHabitToGoal()} }>Add Habit</Button>
-            <Button variant="contained" onClick={ () => {removeHabitFromGoal()} }>remove Habit</Button>
-            <Button variant="contained" onClick={ () => {RemoveGoal()} }>remove Goal</Button>
-            <Button variant="contained" onClick={ () => {printMonth()} }>printMonth</Button>
-            <Button variant="contained" onClick={ () => {printLocalGoals()} }>printlocalGoals</Button>
-          </div>
           <div>
           {curGoals.map((goal, index) => (
             <div key={index} className="goal-container">
-              <h3>{goal.goalName}</h3>
+              <h3 className='goal-text'>{goal.goalName}</h3>
               {goal.habits.map((habit, habitIndex) => (
                 <Button key={habitIndex} variant="contained" className="habit-button">
                   {habit}
