@@ -53,7 +53,12 @@ const GoalsPage = () => {
   const { token } = useContext(AuthContext);
   const { theme, themes } = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openHab, setOpenHab] = React.useState(false);
+  const [ creDeGoal, setCredeGoal ] = useState('Create Goal')
+  const [ creDeHab, setCreDeHab ] = useState('Create Habit')
   const [goalCreateTitle, setGoalCreateTitle] = useState('');
+  const [goalHabitCreateTitle, setGoalHabitCreateTitle] = useState('');
+  const [habitCreateTitle, setHabitCreateTitle] = useState('');
   const { monthData, updateMonth } = useMonth();
   const [ curGoals, setCurGoals ] = useState([]) // This is where we save the goals from local storage to make the pills
 
@@ -77,36 +82,38 @@ const GoalsPage = () => {
   }
 
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpenCre = () => {
+    setCredeGoal('Create Goal')
+    setOpen(true);
+  }
+
+  const handleOpenDel = () => {
+    setCredeGoal('Delete Goal')
+    setOpen(true);
+  }
+
+  const handleClose = () =>  setOpen(false);
+
+  const handleOpenCreHab = () => {
+    setCreDeHab('Create Habit')
+    setOpenHab(true);
+  }
+
+  const handleOpenDelHab = () => {
+    setCreDeHab('Delete Habit')
+    setOpenHab(true);
+  }
+
+  const handleCloseHab = () =>  setOpenHab(false);
+
 
 
   const addGoal = async () => {
     try {
-      const data = await handleAddGoal(token, goalCreateTitle); // Pass the actual value of goalCreateTitle
+      const updatedUser = await handleAddGoal(token, goalCreateTitle); // Pass the actual value of goalCreateTitle
+      setCurGoals(updatedUser.curGoals); // Update the state with the new goals
+      localStorage.setItem('curGoals', JSON.stringify(updatedUser.curGoals)); // Update local storage
       alert('goal added');
-    } catch (error) {
-      console.log(error);
-      alert('nien');
-    }
-  };
-
-  const addHabitToGoal = async () => {
-    console.log('trying');
-    try {
-      const data = await handleAddHabitToGoal(token, 'pear', 'peepee'); // Pass the actual value of goalCreateTitle
-      alert('goal set');
-    } catch (error) {
-      console.log(error);
-      alert('nien');
-    }
-  };
-
-  const removeHabitFromGoal = async () => {
-    console.log('trying');
-    try {
-      const data = await handledeleteHabitFromGoal(token, 'pear', 'hat'); // Pass the actual value of goalCreateTitle
-      alert('goal set');
     } catch (error) {
       console.log(error);
       alert('nien');
@@ -116,8 +123,38 @@ const GoalsPage = () => {
   const RemoveGoal = async () => {
     console.log('trying');
     try {
-      const data = await handledeleteGoal(token, 'pear'); // Pass the actual value of goalCreateTitle
-      alert('goal set');
+      const updatedUser = await handledeleteGoal(token, goalCreateTitle); // Pass the actual value of goalCreateTitle
+      setCurGoals(updatedUser.curGoals); // Update the state with the new goals
+      localStorage.setItem('curGoals', JSON.stringify(updatedUser.curGoals)); // Update local storage
+      alert('goal removed');
+    } catch (error) {
+      console.log(error);
+      alert('nien');
+    }
+  };
+
+  const addHabitToGoal = async () => {
+    console.log('trying');
+    try {
+      const updatedUser = await handleAddHabitToGoal(token, goalHabitCreateTitle, habitCreateTitle);
+      console.log(updatedUser);
+      setCurGoals(updatedUser.curGoals); // Update the state with the new goals
+      localStorage.setItem('curGoals', JSON.stringify(updatedUser.curGoals)); // Update local storage
+      alert('Habit added');
+    } catch (error) {
+      console.log(error);
+      alert('nien');
+    }
+  };
+
+  const removeHabitFromGoal = async () => {
+    console.log('trying');
+    try {
+      const updatedUser = await handledeleteHabitFromGoal(token, goalHabitCreateTitle, habitCreateTitle); // Pass the actual value of goalCreateTitle
+      console.log(updatedUser);
+      setCurGoals(updatedUser.curGoals); // Update the state with the new goals
+      localStorage.setItem('curGoals', JSON.stringify(updatedUser.curGoals)); // Update local storage
+      alert('Habit removed');
     } catch (error) {
       console.log(error);
       alert('nien');
@@ -136,7 +173,8 @@ const GoalsPage = () => {
         <div className='main-flex'>
           <h3>goals</h3>
           <div>
-            <Button variant="contained" onClick={handleOpen}>Create Goal</Button>
+            <Button variant="contained" onClick={handleOpenCre}>Create Goal</Button>
+            <Button variant="contained" onClick={handleOpenDel}>Delete Goal</Button>
             <Modal
               open={open}
               onClose={handleClose}
@@ -145,25 +183,74 @@ const GoalsPage = () => {
               >
                 <Box sx={style}>
                   <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Add Goal
+                    {creDeGoal}
                   </Typography>
                   <div>
                     <div>
                       <TextField label="Goal" type='text' id="outlined-size-normal2" onChange={(event) => {setGoalCreateTitle(event.target.value)}} />
                     </div>
                     <div className='margin-tb'>
-                      <Button variant="contained" onClick={ () => {addGoal()} }>Add Goal</Button>
+                    {creDeGoal === 'Create Goal' ? (
+                      <Button variant="contained" onClick={addGoal}>Add Goal</Button>
+                    ) : (
+                      <Button variant="contained" onClick={RemoveGoal}>Delete Goal</Button>
+                    )}
                     </div>
                   </div>
                 </Box>
               </Modal>
           </div>
-          <div></div>
-          <Button variant="contained" onClick={ () => {addHabitToGoal()} }>Add Habit</Button>
-          <Button variant="contained" onClick={ () => {removeHabitFromGoal()} }>remove Habit</Button>
-          <Button variant="contained" onClick={ () => {RemoveGoal()} }>remove Goal</Button>
-          <Button variant="contained" onClick={ () => {printMonth()} }>printMonth</Button>
-          <Button variant="contained" onClick={ () => {printLocalGoals()} }>printlocalGoals</Button>
+          <div>
+            <Button variant="contained" onClick={handleOpenCreHab}>Create Habit</Button>
+            <Button variant="contained" onClick={handleOpenDelHab}>Delete Habit</Button>
+            <Modal
+              open={openHab}
+              onClose={handleCloseHab}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                    {creDeHab}
+                  </Typography>
+                  <div>
+                    <div>
+                      <TextField label="Goal" type='text' id="outlined-size-normal2" onChange={(event) => {setGoalHabitCreateTitle(event.target.value)}} />
+                      <TextField label="Habit" type='text' id="outlined-size-normal2" onChange={(event) => {setHabitCreateTitle(event.target.value)}} />
+                    </div>
+                    <div className='margin-tb'>
+                    {creDeHab === 'Create Habit' ? (
+                      <Button variant="contained" onClick={addHabitToGoal}>Create Habit</Button>
+                    ) : (
+                      <Button variant="contained" onClick={removeHabitFromGoal}>Delete Habit</Button>
+                    )}
+                    </div>
+                  </div>
+                </Box>
+              </Modal>
+          </div>
+
+
+
+          <div>
+            <Button variant="contained" onClick={ () => {addHabitToGoal()} }>Add Habit</Button>
+            <Button variant="contained" onClick={ () => {removeHabitFromGoal()} }>remove Habit</Button>
+            <Button variant="contained" onClick={ () => {RemoveGoal()} }>remove Goal</Button>
+            <Button variant="contained" onClick={ () => {printMonth()} }>printMonth</Button>
+            <Button variant="contained" onClick={ () => {printLocalGoals()} }>printlocalGoals</Button>
+          </div>
+          <div>
+          {curGoals.map((goal, index) => (
+            <div key={index} className="goal-container">
+              <h3>{goal.goalName}</h3>
+              {goal.habits.map((habit, habitIndex) => (
+                <Button key={habitIndex} variant="contained" className="habit-button">
+                  {habit}
+                </Button>
+              ))}
+            </div>
+          ))}
+          </div>
 
         </div>
       </div>

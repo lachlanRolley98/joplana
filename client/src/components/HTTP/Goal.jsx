@@ -11,20 +11,34 @@ export const handleAddGoal = async (token, goal) => {
       "Authorization": `Bearer ${token}`,
       'content-type': 'application/json'
     };
-    Axios.post(`http://localhost:${PORT}/api/addGoal`, body, {headers})
-    .then((response) => {
-      console.log(response.data.updatedUser);
-    })
-    .catch((error) => {
-      console.log(error)
-    });
+    const response = await Axios.post(`http://localhost:${PORT}/api/addGoal`, body, {headers})
+    return response.data.updatedUser; // Return the updated user data
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    throw error; // Re-throw the error so it can be caught in the calling function
+  }
+}
+
+export const handledeleteGoal = async (token, goal) => {
+  console.log(`poopooPEEPEE ${goal}`)
+  try {
+    const body = {
+      goal,
+    }
+    const headers = {
+      "Authorization": `Bearer ${token}`,
+      'content-type': 'application/json'
+    };
+    const response = await Axios.post(`http://localhost:${PORT}/api/deleteGoal`, body, {headers})
+    return response.data.updatedUser; // Return the updated user data
+  } catch (error) {
+    console.log(error);
+    throw error; // Re-throw the error so it can be caught in the calling function
   }
 }
 
 export const handleAddHabitToGoal = async (token, goal, habit) => {
-  console.log(`poopooPEEPEE ${goal}`)
+  console.log(`poopooPEEPEE ${goal}`);
   try {
     const body = {
       goal,
@@ -32,17 +46,13 @@ export const handleAddHabitToGoal = async (token, goal, habit) => {
     }
     const headers = {
       "Authorization": `Bearer ${token}`,
-      'content-type': 'application/json'
+      'Content-Type': 'application/json'
     };
-    Axios.post(`http://localhost:${PORT}/api/addHabitToGoal`, body, {headers})
-    .then((response) => {
-      console.log(response.data.updatedUser);
-    })
-    .catch((error) => {
-      console.log(error)
-    });
+    const response = await Axios.post(`http://localhost:${PORT}/api/addHabitToGoal`, body, { headers });
+    return response.data.updatedUser; // Return the updated user data
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    throw error; // Re-throw the error so it can be caught in the calling function
   }
 }
 
@@ -57,36 +67,11 @@ export const handledeleteHabitFromGoal = async (token, goal, habit) => {
       "Authorization": `Bearer ${token}`,
       'content-type': 'application/json'
     };
-    Axios.post(`http://localhost:${PORT}/api/deleteHabitFromGoal`, body, {headers})
-    .then((response) => {
-      console.log(response.data.updatedUser);
-    })
-    .catch((error) => {
-      console.log(error)
-    });
+    const response = await Axios.post(`http://localhost:${PORT}/api/deleteHabitFromGoal`, body, {headers})
+    return response.data.updatedUser; // Return the updated user data
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    throw error; // Re-throw the error so it can be caught in the calling function
   }
 }
 
-export const handledeleteGoal = async (token, goal) => {
-  console.log(`poopooPEEPEE ${goal}`)
-  try {
-    const body = {
-      goal,
-    }
-    const headers = {
-      "Authorization": `Bearer ${token}`,
-      'content-type': 'application/json'
-    };
-    Axios.post(`http://localhost:${PORT}/api/deleteGoal`, body, {headers})
-    .then((response) => {
-      console.log(response.data.updatedUser);
-    })
-    .catch((error) => {
-      console.log(error)
-    });
-  } catch (error) {
-    console.log(error)
-  }
-}
