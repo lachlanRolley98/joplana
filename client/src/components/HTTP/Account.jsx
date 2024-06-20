@@ -33,7 +33,7 @@ export const handleLogInUser = (email, password, setToken, navigate) => {
         setToken(response.data.token);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userName', response.data.userName);
-        localStorage.setItem('curGoals', response.data.curGoals);
+        localStorage.setItem('curGoals', JSON.stringify(response.data.curGoals));
         localStorage.setItem('dreamTriggers', response.data.dreamTriggers);
         navigate("/Landing")
       })

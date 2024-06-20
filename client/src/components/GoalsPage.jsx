@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
+import { useMonth } from './MonthContext'
 
 import MiniDrawer from './SideDraw';
 import { useTheme } from './ThemeContext'; // Import useTheme hook
@@ -11,7 +12,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { handleAddGoal, handleAddHabitToGoal, handledeleteHabitFromGoal, handledeleteGoal } from './HTTP/Goal'
-
 
 {/* <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={1}></ExampleButton>
 <ExampleButton text={'Wadup'} onClick={ () => {alert('clicked')}  } colorVariant={2}></ExampleButton>
@@ -36,6 +36,14 @@ const style = {
 };
 
 
+// How to itterate over goals
+// for (const goal of user.curGoals) {
+//   console.log(`Goal: ${goal.goalName}`);
+//   for (const habit of goal.habits) {
+//     console.log(`  Habit: ${habit}`);
+//   }
+// }
+
 
 
 
@@ -46,7 +54,27 @@ const GoalsPage = () => {
   const { theme, themes } = useTheme();
   const [open, setOpen] = React.useState(false);
   const [goalCreateTitle, setGoalCreateTitle] = useState('');
+  const { monthData, updateMonth } = useMonth();
+  const [ curGoals, setCurGoals ] = useState([]) // This is where we save the goals from local storage to make the pills
 
+
+
+  useEffect(() => {
+    const curGoalsFromLocal = localStorage.getItem('curGoals');
+    if (curGoalsFromLocal) {
+      setCurGoals(JSON.parse(curGoalsFromLocal));
+    }
+  }, []);
+
+  const printLocalGoals = () =>{
+    console.log(curGoals)
+    curGoals.forEach(goal => {
+      console.log(`Goal: ${goal.goalName}`);
+      goal.habits.forEach(habit => {
+        console.log(`  Habit: ${habit}`);
+      });
+    });
+  }
 
 
   const handleOpen = () => setOpen(true);
@@ -66,7 +94,7 @@ const GoalsPage = () => {
   const addHabitToGoal = async () => {
     console.log('trying');
     try {
-      const data = await handleAddHabitToGoal(token, 'pear', 'hat'); // Pass the actual value of goalCreateTitle
+      const data = await handleAddHabitToGoal(token, 'pear', 'peepee'); // Pass the actual value of goalCreateTitle
       alert('goal set');
     } catch (error) {
       console.log(error);
@@ -95,6 +123,10 @@ const GoalsPage = () => {
       alert('nien');
     }
   };
+
+  const printMonth = () => {
+    console.log(monthData)
+  }
 
 
   return (
@@ -126,9 +158,13 @@ const GoalsPage = () => {
                 </Box>
               </Modal>
           </div>
+          <div></div>
           <Button variant="contained" onClick={ () => {addHabitToGoal()} }>Add Habit</Button>
           <Button variant="contained" onClick={ () => {removeHabitFromGoal()} }>remove Habit</Button>
           <Button variant="contained" onClick={ () => {RemoveGoal()} }>remove Goal</Button>
+          <Button variant="contained" onClick={ () => {printMonth()} }>printMonth</Button>
+          <Button variant="contained" onClick={ () => {printLocalGoals()} }>printlocalGoals</Button>
+
         </div>
       </div>
     </div>
